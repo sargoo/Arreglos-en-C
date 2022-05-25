@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1653503278 source:c:\users\gonzaa\desktop\practico-arreglos\main.c
+	<stdio.h>
+	<stdlib.h>
+	"pila.h"
+	<conio.h>
+	<time.h>
+
+1490112217 c:\users\gonzaa\desktop\practico-arreglos\pila.h
+	<stdio.h>
+	<malloc.h>
+
+1490112217 source:c:\users\gonzaa\desktop\practico-arreglos\pila.c
+	"pila.h"
+
