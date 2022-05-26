@@ -3,6 +3,7 @@
 #include "pila.h"
 #include <conio.h>
 #include <time.h>
+
 #define DIM 50
 #define ESC 27
 
@@ -13,15 +14,20 @@ void sumaElementos (int arreglo[], int valid);
 void copiarElementos(int arreglo[], int valid, Pila *p);
 int  cargarRandom(float arreglo[], int dimension, int valid);
 void mostrarFloat (float arreglo[], int valid);
-
+int encontrarCaracter (char arreglo[], int valid, char caracter);
+int cargarArregloCaracter (char arreglo[], int valid);
 
 int main()
 {
     srand(time(NULL));
     int array[DIM];
+    int flag = 0;
+    char arrayCaracteres [DIM];
     float arrayFloat [100];
     int validos = 0;
     float validosFloat = 0;
+    int validosCaracteres = 0;
+    char buscar;
     Pila pila;
     inicpila(&pila);
 
@@ -32,14 +38,33 @@ int main()
     copiarElementos(array, validos, &pila);
     validosFloat = cargarRandom(arrayFloat, 100, validos);
     mostrarFloat(arrayFloat, validosFloat);
-    system("pause");
+
+    validosCaracteres = cargarArregloCaracter (arrayCaracteres, validosCaracteres);
+    printf("\n Indique que caracter quiere buscar en el arreglo: ");
+    fflush(stdin);
+    scanf("%c", &buscar);
+    system("cls");
+    flag = encontrarCaracter(arrayCaracteres, validosCaracteres, buscar);
+
+    if(flag == 1)
+
+    {
+     system("color 27");
+     printf("El caracter SI se encuentra en el arreglo.");
+    }
+    else
+    {
+        system("color 47");
+        printf("El caracter NO se encuentra en el arreglo.");
+    }
+
     return 0;
 }
 
 int cargarArreglo (int arreglo[], int valid)
 {
     int opcion = 0;
-    printf("1- Hacer una funci贸n que reciba como par谩metro un arreglo de n煤meros enteros y permita que el usuario ingrese valores al mismo por teclado. La funci贸n debe retornar la cantidad de elementos cargados en el arreglo (o pueden utilizar como puntero v谩lidos)\n");
+    printf("1- Hacer una funci髇 que reciba como par醡etro un arreglo de n鷐eros enteros y permita que el usuario ingrese valores al mismo por teclado. La funci髇 debe retornar la cantidad de elementos cargados en el arreglo (o pueden utilizar como puntero v醠idos)\n");
     while (opcion != ESC &&  valid < DIM)
     {
         printf("Ingrese in valor al arreglo: \n");
@@ -55,7 +80,7 @@ int cargarArreglo (int arreglo[], int valid)
 void mostrarArreglo (int arreglo[], int valid)
 {
     int i = 0;
-    printf("2- Hacer una funci贸n que reciba como par谩metro un arreglo y la cantidad de elementos (v谩lidos) cargados en 茅l y los muestre por pantalla.\n");
+    printf("2- Hacer una funci髇 que reciba como par醡etro un arreglo y la cantidad de elementos (v醠idos) cargados en 閘 y los muestre por pantalla.\n");
     while (i < valid )
     {
         printf("|%i|", arreglo[i]);
@@ -65,7 +90,7 @@ void mostrarArreglo (int arreglo[], int valid)
 
 void sumaElementos (int arreglo[], int valid)
 {
-    printf("\n 3- Hacer una funci贸n que reciba como par谩metro un arreglo, la cantidad de elementos (v谩lidos) cargados en 茅l y una Pila. La funci贸n debe copiar los elementos del arreglo en la pila\n");
+    printf("\n 3- Hacer una funci髇 que reciba como par醡etro un arreglo, la cantidad de elementos (v醠idos) cargados en 閘 y una Pila. La funci髇 debe copiar los elementos del arreglo en la pila\n");
     int total = 0;
 
     for (int i = 0; i < valid; i++)
@@ -77,7 +102,7 @@ void sumaElementos (int arreglo[], int valid)
 
 void copiarElementos(int arreglo[], int valid, Pila *p)
 {
-    printf("\n 4- Hacer una funci贸n que reciba como par谩metro un arreglo, la cantidad de elementos (v谩lidos) cargados en 茅l y una Pila. La funci贸n debe copiar los elementos del arreglo en la pila.");
+    printf("\n 4- Hacer una funci髇 que reciba como par醡etro un arreglo, la cantidad de elementos (v醠idos) cargados en 閘 y una Pila. La funci髇 debe copiar los elementos del arreglo en la pila.");
     int i = 0;
 
     while (i < valid)
@@ -91,7 +116,7 @@ void copiarElementos(int arreglo[], int valid, Pila *p)
 
 void sumaElementosFloat (float arreglo [], int valid)
 {
-    printf("\n 5- Realizar una funci贸n que sume los elementos de un arreglo de n煤meros reales (float) de dimensi贸n 100. (se recomienda hacer una funci贸n para cargar y otra para mostrar para este tipo de dato asociado al arreglo)");
+    printf("\n 5- Realizar una funci髇 que sume los elementos de un arreglo de n鷐eros reales (float) de dimensi髇 100. (se recomienda hacer una funci髇 para cargar y otra para mostrar para este tipo de dato asociado al arreglo)");
 }
 
 void mostrarFloat (float arreglo[], int valid)
@@ -119,4 +144,37 @@ int  cargarRandom(float arreglo[], int dimension, int valid)
     return i;
 }
 
+/// Realizar una funci髇 que indique si un elemento dado se encuentra en un arreglo de caracteres.
 
+int encontrarCaracter (char arreglo[], int valid, char caracter)
+{
+    int flag = 0;
+    int i = 0;
+
+    while(i < valid && flag == 0)
+    {
+        if (arreglo[i] == caracter)
+        {
+            flag = 1;
+        }
+        i ++;
+    }
+   return flag;
+}
+
+int cargarArregloCaracter (char arreglo[], int valid)
+{
+    int opcion = 0;
+    system("cls");
+    while (opcion != ESC &&  valid < DIM)
+    {
+        printf("\n Ingrese in valor al arreglo de caracteres: \n");
+        fflush(stdin);
+        scanf("%c", &arreglo[valid]);
+        valid ++;
+        printf("Seguir cargando datos?\n Cualq. tecla: SI\n Esc: NO");
+        opcion = getch();
+        system("cls");
+    }
+    return valid;
+}
