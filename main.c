@@ -16,18 +16,24 @@ int  cargarRandom(float arreglo[], int dimension, int valid);
 void mostrarFloat (float arreglo[], int valid);
 int encontrarCaracter (char arreglo[], int valid, char caracter);
 int cargarArregloCaracter (char arreglo[], int valid);
+int insertarOrdenado(char a[], int v, char caracter);
+void mostrarChar (char arreglo[], int valid);
+char encontrarMayor (char a[], int valid);
 
 int main()
 {
     srand(time(NULL));
     int array[DIM];
     int flag = 0;
+    char arrayCaracteresOrdenado [DIM];
     char arrayCaracteres [DIM];
+    char otroArray [DIM];
     float arrayFloat [100];
     int validos = 0;
     float validosFloat = 0;
     int validosCaracteres = 0;
     char buscar;
+    char mayor;
     Pila pila;
     inicpila(&pila);
 
@@ -39,12 +45,12 @@ int main()
     validosFloat = cargarRandom(arrayFloat, 100, validos);
     mostrarFloat(arrayFloat, validosFloat);
 
-    validosCaracteres = cargarArregloCaracter (arrayCaracteres, validosCaracteres);
+    validosCaracteres = cargarArregloCaracter (arrayCaracteresOrdenado, validosCaracteres);
     printf("\n Indique que caracter quiere buscar en el arreglo: ");
     fflush(stdin);
     scanf("%c", &buscar);
     system("cls");
-    flag = encontrarCaracter(arrayCaracteres, validosCaracteres, buscar);
+    flag = encontrarCaracter(arrayCaracteresOrdenado, validosCaracteres, buscar);
 
     if(flag == 1)
 
@@ -57,6 +63,27 @@ int main()
         system("color 47");
         printf("El caracter NO se encuentra en el arreglo.");
     }
+
+    system("pause");
+    system("cls");
+    system("color 07");
+
+    printf("\n Indique que caracter quiere insertar en el arreglo: ");
+    fflush(stdin);
+    scanf("%c", &buscar);
+    system("cls");
+
+    validos = 0;
+    validos = cargarArregloCaracter (arrayCaracteres, validos);
+    validos = insertarOrdenado(arrayCaracteres, validos, buscar);
+    mostrarChar (arrayCaracteres, validos);
+    system("pause");
+
+    validos = 0;
+    validos = cargarArregloCaracter (otroArray, validos);
+    mayor = encontrarMayor (otroArray, validos);
+    mostrarChar (otroArray, validos);
+    printf("El caracter mayor es: %c", mayor);
 
     return 0;
 }
@@ -168,7 +195,7 @@ int cargarArregloCaracter (char arreglo[], int valid)
     system("cls");
     while (opcion != ESC &&  valid < DIM)
     {
-        printf("\n Ingrese in valor al arreglo de caracteres: \n");
+        printf("\n Ingrese un valor al arreglo de caracteres: \n");
         fflush(stdin);
         scanf("%c", &arreglo[valid]);
         valid ++;
@@ -178,3 +205,51 @@ int cargarArregloCaracter (char arreglo[], int valid)
     }
     return valid;
 }
+
+int insertarOrdenado(char a[], int v, char caracter)
+{
+    int i = v - 1;
+    while(i >= 0 && a[i] > caracter){
+        a[i+1]=a[i];
+        i--;
+    }
+    a[i+1]=caracter;
+
+    return v+1;
+}
+
+void mostrarChar (char arreglo[], int valid)
+{
+    int i = 0;
+    while (i < valid )
+    {
+        printf("|%c|", arreglo[i]);
+        i++;
+    }
+}
+
+
+///Realizar una función que obtenga el máximo carácter de un arreglo dado.
+
+char encontrarMayor (char a[], int valid)
+{
+    int i = valid -1;
+    char m = a[i];
+
+    while (i >= 0)
+    {
+        if (m < a[i] )
+        {
+            m = a[i];
+            i--;
+        }
+        else
+        {
+            i--;
+        }
+    }
+    printf("ESTO VALE M: %c", m);
+
+    return m;
+}
+
