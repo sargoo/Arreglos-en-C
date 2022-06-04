@@ -19,6 +19,11 @@ int cargarArregloCaracter (char arreglo[], int valid);
 int insertarOrdenado(char a[], int v, char caracter);
 void mostrarChar (char arreglo[], int valid);
 char encontrarMayor (char a[], int valid);
+int capicua (char a[], int v);
+void invertirArreglo (char a[], int v);
+void ordenarXseleccion(char a[], int v);
+void ordenarXinsercion (char a[], int v);
+
 
 int main()
 {
@@ -28,16 +33,15 @@ int main()
     char arrayCaracteresOrdenado [DIM];
     char arrayCaracteres [DIM];
     char otroArray [DIM];
+    char arrayCapicua [DIM];
     float arrayFloat [100];
     int validos = 0;
     float validosFloat = 0;
     int validosCaracteres = 0;
-    char buscar;
-    char mayor;
     Pila pila;
     inicpila(&pila);
 
-    validos = cargarArreglo (array, validos);
+    /*validos = cargarArreglo (array, validos);
     printf("Validos : %i\n", validos);
     mostrarArreglo (array, validos);
     sumaElementos ( array, validos);
@@ -84,6 +88,43 @@ int main()
     mayor = encontrarMayor (otroArray, validos);
     mostrarChar (otroArray, validos);
     printf("El caracter mayor es: %c", mayor);
+
+    validos = cargarArregloCaracter(arrayCapicua, validos);
+    flag = capicua(arrayCapicua, validos);
+    printf("VALIDOS: %i", validos);
+    if(flag == 0)
+    {
+        printf("El arreglo %s SI es capicua.", arrayCapicua);
+    }
+    else
+    {
+        printf("El arreglo %s NO es capicua.", arrayCapicua);
+    }
+
+    validos = cargarArregloCaracter(arrayCaracteres, validos);
+    mostrarChar(arrayCaracteres, validos);
+    printf("\n");
+    invertirArreglo(arrayCaracteres,validos);
+    mostrarChar(arrayCaracteres, validos);
+
+    validos = cargarArregloCaracter(arrayCaracteres, validos);
+    ordenarXseleccion(arrayCaracteres,validos);
+    mostrarChar(arrayCaracteres,validos);*/
+
+    validos = cargarArregloCaracter(arrayCaracteres, validos);
+    ordenarXseleccion(arrayCaracteres, validos);
+    mostrarChar(arrayCaracteres, validos);
+    system("pause");
+
+    printf("INGRESE UN ELEMENTO PARA INSERTAR EN EL ARREGLO DE CARACARTERES: \n");
+    fflush(stdin);
+    scanf("%c", &arrayCaracteres[validos +1]);
+    mostrarChar(arrayCaracteres, validos);
+    printf("ARRAY CON ELEMENTO A INSERTAR: \n");
+    ordenarXinsercion(arrayCaracteres, validos);
+    mostrarChar(arrayCaracteres, validos);
+
+
 
     return 0;
 }
@@ -186,7 +227,7 @@ int encontrarCaracter (char arreglo[], int valid, char caracter)
         }
         i ++;
     }
-   return flag;
+    return flag;
 }
 
 int cargarArregloCaracter (char arreglo[], int valid)
@@ -209,7 +250,8 @@ int cargarArregloCaracter (char arreglo[], int valid)
 int insertarOrdenado(char a[], int v, char caracter)
 {
     int i = v - 1;
-    while(i >= 0 && a[i] > caracter){
+    while(i >= 0 && a[i] > caracter)
+    {
         a[i+1]=a[i];
         i--;
     }
@@ -248,8 +290,100 @@ char encontrarMayor (char a[], int valid)
             i--;
         }
     }
-    printf("ESTO VALE M: %c", m);
 
     return m;
 }
+
+
+///Realizar una función que determine si un arreglo es capicúa.
+
+int capicua (char a[], int v)
+{
+
+    int i = 0;
+    int flag = 0;
+    v = v -1;
+
+    while(v > 0 && i < v && flag == 0)
+    {
+        if(a[i] == a[v])
+        {
+            i++;
+            v--;
+        }
+        else
+        {
+
+            flag = 1;
+        }
+    }
+
+    return flag;
+}
+
+///Realizar una función que invierta los elementos de un arreglo.
+
+void invertirArreglo (char a[], int v)
+{
+
+    int i = 0;
+    v = v -1;
+    char aux;
+
+    while(v > i)
+    {
+        aux = a[v];
+        a[v] = a[i];
+        a[i] = aux;
+        v--;
+        i++;
+    }
+}
+
+/// Ordenar un arreglo según los siguientes métodos: A)Selección B)Inserción
+
+void ordenarXseleccion(char a[], int v)
+
+{
+    int i = 0;
+    char aux;
+
+    while (i < v-1 )
+    {
+        while(a[i] > a[i+1])
+        {
+            aux = a[i+1];
+            a[i+1] = a[i];
+            a[i] = aux;
+
+            while(i > 0 && a[i] < a[i-1])
+            {
+                aux = a[i-1];
+                a[i-1] = a[i];
+                a[i] = aux;
+                i--;
+            }
+        }
+        i++;
+    }
+}
+
+
+void ordenarXinsercion (char a[], int v)
+{
+    int i = v;
+    char aux;
+
+    while(i >= 0)
+    {
+        while(a[i] < a[i-1])
+        {
+            aux = a[i-1];
+            a[i-1] = a[i];
+            a[i] = aux;
+        }
+        i--;
+    }
+}
+
 
